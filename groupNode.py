@@ -12,10 +12,11 @@ class groupNode(Node):
         self.initials = [s.strip(',').replace('(', '').replace(')', '') for s in cols]
         self.functions = [s.strip(',').split('(')[0] for s in cols]
         self.fromTbl = fromTbl
-        self.whereN = whereNode("where", whereConditions)
+        self.whereN = whereNode("where", whereConditions) if len(whereConditions) > 0 else None
         self.order = orderNode("order", [s.strip(',') for s in orderList])
         self.groupList = groupList
         self.cmd = ""
+        print(whereConditions)
     
 
     def TransformToNoSQL(self):
@@ -47,10 +48,11 @@ class groupNode(Node):
             self.cmd += self.order.createOrderCommand()
 
         # FINAL
+        self.cmd += str(mainDict)
         self.cmd += ');'
-        print('')
-        print(mainDict)
-        print('Bordea')
+        # print('')
+        # print(mainDict)
+        # print('Bordea')
     
     def toString(self):
         return self.cmd

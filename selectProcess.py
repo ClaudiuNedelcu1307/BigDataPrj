@@ -11,7 +11,7 @@ def preparationForSelectQuerry():
     global tokensDict, delTokens, groupTokens
     tokensDict = {'select': [], 'from': [], 'where': [], 'order': [], 'group':[]}
     delTokens = ['by', ';']
-    groupTokens = ['sum', 'group']
+    groupTokens = ['sum']
 
 def find_between(inputList, first, last):
     try:
@@ -26,8 +26,6 @@ def makeListsForNodes(inputString):
     for word in inputString:
         if word in tokensDict:
             key = word
-        elif word in groupTokens:
-            key = 'group'
         elif word in delTokens:
             continue
         else:
@@ -41,7 +39,7 @@ def selectQ(inputString):
     print('Ana')
     print(tokensDict)
     if len(tokensDict['group']) > 0:
-        item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], None)
+        item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['group'])
     else:
         item = findNode("find", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'])
     item.TransformToNoSQL()
