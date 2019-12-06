@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Proiect Big Data</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+    <!-- <link rel="stylesheet" href="css/menuu.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menuu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slide-nav.css') }}">
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/slide-nav.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style-home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modal-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/background.css') }}">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/icon.png') }}">
+
+</head>
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Home</a>
+                    </li>
+                    <li role="presentation"><a href="#">Log In</a>
+                    </li>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">SQL to NoSQL</h3>
+        </div>
+        <section class="section-gray">
+                <div class="container spacing">
+                    <div class="col-sm-6">
+                        <h1>Bucket List App</h1>
+                        <p class="lead"></p>
+                        
+                        </p>
+                        <!-- <input id="sqlFileToUpload" type="file" multiple accept=".txt,.sql" />
+                        <input id="sqlFileToUploadBtn" class="btn btn-lg btn-success" type = "submit"/> -->
+                        <!-- <form action="#" onsubmit="return false;"> -->
+                            <dl><p>
+                                <input id="sqlFileToUpload" type="file" name="file" autocomplete="off" required>
+                            </p></dl>
+                            <p>
+                                <button class="btn btn-lg btn-success" id="sqlFileToUploadBtn" onclick="document.getElementById('id02').style.display='block'">Submit</button>
+                            </p>
+                        <!-- </form> -->
+                    </div>
+                    <div class="col-sm-6">
+                        <img src="static/images/1.jpg" alt="alti" class="img-responsive">
+                    </div>
+                </div>
+            </section>
+ 
+        <section style="background-color: #fafafa;width: 1160px;">
+            <div class="row container spacing padding-top-10">
+                <div class="col-lg-12 text-align-center">
+                    <p class="text-align-center"><button class="btn btn-lg btn-success" onclick="console.log('hatz')" id="btnSend">Transform</button></p><br>
+                    <div class="text-align-center">
+                        <input type="radio" name="typeLan" value="MongoDB" checked> MongoDB<br>
+                        <input type="radio" name="typeLan" value="Cassandra"> Cassandra
+                    </div>
+                </div>
+            </div>
+            <div class="row container spacing">
+                <div class="col-lg-6">
+                    <h3 class="sellGear-title">SQL</h3>
+                    <textarea id="SQLField"  oninput="ShouldTransform()">select * from emp;</textarea>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="sellGear-title">NoSQL</h3>
+                    <textarea id="NoSQLField" class="left-10" readonly>                   
+                        
+                    </textarea>
+                    <!-- <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+            
+                        <h4>Bucket List</h4>
+                        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+            
+                        <h4>Bucket List</h4>
+                        <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p> -->
+                </div>
+            </div>
+        </section>
+ 
+        <footer class="footer">
+            <p>&copy; H 2019</p>
+        </footer>
+ 
+    </div>
+
+
+    <!-- MODAL SECTION -->
+
+    <div id="id02" class="modalRegister">
+        <div class="modalReg-content animate">
+            <div class="imgcontainer">
+                <span id="miculX" onclick="lightTheUploadModalUp(false, '')" class="close display-none" title="Close Modal">&times;</span>
+                <img src="static/img/avatar2.jpg" alt="Avatar" class="avatarLogin">
+            </div>
+            <form class="containerReg" action="#" onsubmit="return false;">
+              <h1>Submiting ...</h1>
+              <p id="finishLine">Your file  is ready to be converted</p>
+        
+              <div class="clearfix">
+                <button id="cancelReg" type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn display-none">Cancel</button>
+                <button id="confirmReg" type="submit" onclick="sendTransformSignal()" class="signupbtn float-right display-none">Transform</button>
+              </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="id01" class="modalLogin">
+        <div class="modalLogin-content animate">
+          <div class="imgcontainer">
+            <img src="static/img/avatar.png" alt="Avatar" class="avatarLogin">
+          </div>
+      
+          <div class="containerLogin">
+            <p class="text-align-center"><b>Processing ...</b></p>
+            
+          </div>
+        </div>
+      </div>
+  <!-- DOAR PENTRU TESTARE ! -->
+  <script>
+      // Get the modal
+      var modal = document.getElementById('id01');
+      var modalR = document.getElementById('id02');
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+          if (event.target == modalR) {
+              modalR.style.display = "none";
+          }
+      }
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+#quick .quick_search{
+	background-size: cover;
+	color: transparent;
+	font-size: 30px;
+	font-weight: bold;
+	padding-top: 20px;
+	width: 100%;
+	height: 120px; /* acelasi cu fundalul gray */
+	margin: 13px 0;
+}
+
+#quick .quick_search .overlay{
+	position: relative;
+	top: -64px;
+	background: #7affc3;
+	width: 100%;
+	height: 120px; /* acelasi cu butonul */
+    opacity: 0;
+    
+    -webkit-transition-duration: all 0.4s ease-out; 
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#quick .quick_search:hover .overlay{
+	opacity: 0.3;
+}
+
+#quick .quick_search:hover{
+    color: red;
+}
+
+.search-container {
+    text-align: center;
+    margin: 8px 0 0 0;
+}
+
+.quick-title {
+    font-weight: bold;
+    text-underline-position: auto;
+    text-decoration: underline;
+    margin-top: 35px;
+}
+
+.search-container > form button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #ddd;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+.search-container > form button:hover {
+    background: #ccc;
+}
+
+.search-input {
+    padding: 8px;
+    margin-top: 8px;
+    font-size: 17px;
+    width: 60%;
+  }
+
+.sell-button {
+    border-radius: 75%;
+    width: 250px;
+    height: 100px;
+    font-family: 'Atma';
+    font-size: 22px;
+    background-color: #2cd64e;
+    color: #d65f2c;
+    font-weight: bold; 
+}
+
+.sellGear-title {
+    font-size: 30px;
+}

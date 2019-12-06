@@ -1,0 +1,120 @@
+#id01 input[type=text], #id01 input[type=password], #id01 input[type=email],
+#id02 input[type=text], #id02 input[type=password], #id02 input[type=email] {
+    max-width: 560px;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    }
+
+#id01 div button {
+    background-color: #4400b1;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+#id01 .cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #4400b1;
+}
+
+#id02 #confirmReg {
+    background-color: #4400b1;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+#id02 #cancelReg {
+    background-color: #4400b1;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+
+#id01 .containerLogin,
+#id02 .containerReg,
+#id03 .containerLogin {
+  padding: 16px;
+}
+
+/* The Modal (background) */
+.modalLogin, .modalRegister {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 30px;
+}
+
+/* Modal Content/Box */
+#id01 .modalLogin-content, #id02 .modalReg-content, #id03 .modalLogin-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    max-width: 500px; /* Could be more or less, depending on screen size */
+    width: 80%;
+}
+
+#finishLine {
+    display: none;
+}
+
+/* The Close Button (x) */
+#id01 .close, #id02 .close, #id03 .close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#id01 .close:hover, .close:focus, #id02 .close:hover, #id02 .close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+#id01 button#confirmLogin:hover,
+#id02 button#confirmReg:hover {
+    background-color: green;
+    cursor: pointer;
+}
+
+#id01 button#cancelLogin:hover {
+    background-color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.4s;
+  animation: animatezoom 0.4s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}

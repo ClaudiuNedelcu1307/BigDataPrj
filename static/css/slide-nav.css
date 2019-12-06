@@ -1,0 +1,73 @@
+/* container */
+#slide-nav, #slide-nav-instr {
+    max-width: 350px;
+    max-height: 350px;
+    position: relative;
+    margin: auto;
+  }
+
+#slide-nav .mySlides,
+#slide-nav-instr .mySlidesInstr {
+    display: none
+}
+
+/* Next & previous buttons */
+#slide-nav .prev, #slide-nav .next,
+#slide-nav-instr .prevInstr, #slide-nav-instr .nextInstr {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 19px;
+  transition: 0.6s ease;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+#slide-nav a.next,
+#slide-nav-instr a.nextInstr {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+#slide-nav a.prev,
+#slide-nav-instr a.prevInstr {
+    border-radius: 0 3px 3px 0;
+}
+/* On hover, add a black background color with a little bit see-through */
+
+#slide-nav a.next:hover, 
+#slide-nav-instr a.nextInstr:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+#slide-nav a.prev:hover, 
+#slide-nav-instr a.prevInstr:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* The dots/bullets/indicators */
+#slide-nav-dot .dot,
+#slide-nav-instr-dot .dotInstr {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+#slide-nav-dot .active-car,
+#slide-nav-instr-dot .active-car {
+  background-color: black;
+}
+
+#slide-nav-dot .dot:hover,
+#slide-nav-instr-dot .dotInstr:hover {
+    background-color: black;
+  }

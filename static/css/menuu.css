@@ -1,0 +1,96 @@
+#meniu {
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+#meniu > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: transparent;
+  }
+
+#meniu > ul li {
+    float: left;
+    border-right:1px solid #bbb;
+    width: 120px;
+    text-align: center;
+}
+
+  
+#meniu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    width:100%;
+  }
+  
+  #meniu li a:hover:not(.active) {
+    background-color: #111;
+  }
+  
+  #meniu .active {
+    background-color: #4CAF50;
+  }
+
+  #meniu li a, .dropbtn {
+    display: inline-block;
+    color: #00ffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  #meniu li a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+  }
+  
+  #meniu li.dropdown {
+    display: inline-block;
+  }
+  
+  #meniu .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: transparent;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+#meniu .dropdown-content a {
+    color: #00ffff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+#meniu .dropdown-content a:hover {background-color: #f1f1f1}
+  
+#meniu  li.dropdown:hover div.dropdown-content {
+    display: block;
+    position: fixed;
+}
+
+.item-navbar {
+    max-height: 500px;
+    height: 500px;
+    padding: 37px 0;
+    color: #fff;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.item-navbar-min {
+  max-height: 250px;
+  height: 250px;
+  padding: 37px 0;
+  color: #fff;
+  background-size: cover;
+  background-position: center center;
+}

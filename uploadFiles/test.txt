@@ -1,0 +1,11 @@
+select * from emp where ename = 'Hatz';
+select * from emp where ename = 'Hatz';
+select * from emp where ename = 'Hatz';
+select * from emp where ename = 'Hatz';
+select * from emp where ename = 'Hatz';
+select * from emp where ename = 'Hatz';
+select * from emp where ename = 'Hatz' order by a desc;
+select c, d from emp where a > b;
+insert into emp (a, b) values (c, d);
+select a, b, c from emp where ( a > 12 and b > 3 ) or ( c = 5 or not d = 7 ) order by a desc;
+drop table emp;
