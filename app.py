@@ -45,12 +45,10 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             flash('File successfully uploaded')
-            # return "Mata probeaza, Catalin nu probeaza!"
-            return 'DA'
+            return "Mata probeaza, Catalin nu probeaza!"
         else:
             #flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
-            # return 'Fisier prost ca tine'
-            return 'NO'
+            return 'Fisier prost ca tine'
 
 @app.route('/uploadCmd',methods=['POST'])
 def uploadCmd():
@@ -76,8 +74,7 @@ def makeCmd(_name, _text):
                 rezEval = eval(str(textList[0]) + 'Q' + '(' + str(tempDict) + ')')
                 rezList.append(rezEval)
             else: 
-                # return 'Put a sock on it !'
-                return 'Not a valid command'
+                return 'Put a sock on it !'
         else:
             return json.dumps({'html':'<span>Enter the required fields</span>'})
     
