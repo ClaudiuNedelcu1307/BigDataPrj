@@ -1,12 +1,16 @@
 from Node import Node
 from whereNode import whereNode
 from orderNode import orderNode
+from colsNode import colsNode
+from groupFunctionsNode import groupFunctionsNode
 import re
 class groupNode(Node):
 
     def __init__(self, name, cols, fromTbl, whereConditions, orderList, groupList):
         super().__init__(name)
-        self.cols = [s.strip(',') for s in cols]
+        self.colsN = colsNode('cols', [re.search('\(([^)]+)', s.strip(',')).group(1) for s in cols])
+        self.initials = [s.strip(',').replace('(', '').replace(')', '') for s in cols]
+        self.functions = [s.strip(',').split('(')[0] for s in cols]
         self.fromTbl = fromTbl
         self.whereN = whereNode("where", whereConditions)
         self.order = orderNode("order", [s.strip(',') for s in orderList])
@@ -15,27 +19,43 @@ class groupNode(Node):
     
 
     def TransformToNoSQL(self):
-        self.cmd = "db." + self.fromTbl[0] + ".group" # vor fi mai multe tabele???
-        mainDicts = []
-        if not("*" in self.cols):
-            colsDict = {}
-            for col in self.cols:
-                colsDict[str(col)] = 1
-            mainDicts.append(colsDict)
-        elif len(self.cols) > 1:
-            raise Exception('Invalid syntax: {}'.format(self.cols))
+        #FROM
+        self.cmd = "db." + self.fromTbl[0] + ".group(" # vor fi mai multe tabele???
+        mainDict = {}
 
+        # SELECT
+        selectDict = self.colsN.createCols()
+        mainDict['key'] =  selectDict
+
+        # INITIALS
+        mainDict['initials'] = {key: 0 for key in self.initials} 
+
+        # GROUP FUNCTIONS
+        grpFncNode = groupFunctionsNode('f', zip(self.functions, self.initials, self.colsN.getList()))
+        grpFncNode.makeFunctions()
+        mainDict['reduce'] = str(grpFncNode).replace("'", "")
+
+        # WHERE
         if self.whereN:
-            mainDicts.append(self.whereN.createConditionDict())
+            self.cmd += ', '
+            whereDict = self.whereN.createConditionDict()
+            mainDict['cond'] = whereDict
+            # self.cmd += str(whereDict)
 
-        self.cmd += str(mainDicts)
-
+        # ORDER
         if self.order:
             self.cmd += self.order.createOrderCommand()
 
-        self.cmd += ';'
-
+        # FINAL
+        self.cmd += ');'
+        print('')
+        print(mainDict)
+        print('Bordea')
     
+    def toString(self):
+        return self.cmd
+
     def __str__(self):
         print(self.cmd)
         return ""
+

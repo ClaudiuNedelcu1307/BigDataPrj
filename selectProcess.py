@@ -11,7 +11,7 @@ def preparationForSelectQuerry():
     global tokensDict, delTokens, groupTokens
     tokensDict = {'select': [], 'from': [], 'where': [], 'order': [], 'group':[]}
     delTokens = ['by', ';']
-    groupTokens = ['sum', 'group by']
+    groupTokens = ['sum', 'group']
 
 def find_between(inputList, first, last):
     try:
@@ -26,6 +26,8 @@ def makeListsForNodes(inputString):
     for word in inputString:
         if word in tokensDict:
             key = word
+        elif word in groupTokens:
+            key = 'group'
         elif word in delTokens:
             continue
         else:
@@ -36,16 +38,17 @@ def selectQ(inputString):
     preparationForSelectQuerry()
     inputString = inputString['val']
     makeListsForNodes(inputString)
-
+    print('Ana')
+    print(tokensDict)
     if len(tokensDict['group']) > 0:
-        item = groupNode("find", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], None)
+        item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], None)
     else:
         item = findNode("find", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'])
     item.TransformToNoSQL()
 
     return item.toString()
 
-_text = re.sub(' +', ' ', "select * from Customers where a = upper('mata')".strip())
+_text = re.sub(' +', ' ', "select sum(a), sum(b) from Customers where a = 'Uranus' group by a".strip())
 textList = _text.split()
 print("Codrin")
 print(textList)

@@ -13,3 +13,6 @@ class colsNode(Node):
                 colsDict[str(col)] = 1
             return colsDict
         return {}
+
+    def getList(self):
+        return self.colsList
