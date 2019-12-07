@@ -16,7 +16,6 @@ class groupNode(Node):
         self.order = orderNode("order", [s.strip(',') for s in orderList])
         self.groupList = groupList
         self.cmd = ""
-        print(whereConditions)
     
 
     def TransformToNoSQL(self):
@@ -34,14 +33,13 @@ class groupNode(Node):
         # GROUP FUNCTIONS
         grpFncNode = groupFunctionsNode('f', zip(self.functions, self.initials, self.colsN.getList()))
         grpFncNode.makeFunctions()
-        mainDict['reduce'] = str(grpFncNode).replace("'", "")
+        mainDict['reduce'] = str(grpFncNode)
 
         # WHERE
         if self.whereN:
             self.cmd += ', '
             whereDict = self.whereN.createConditionDict()
             mainDict['cond'] = whereDict
-            # self.cmd += str(whereDict)
 
         # ORDER
         if self.order:
@@ -50,9 +48,7 @@ class groupNode(Node):
         # FINAL
         self.cmd += str(mainDict)
         self.cmd += ');'
-        # print('')
-        # print(mainDict)
-        # print('Bordea')
+
     
     def toString(self):
         return self.cmd
