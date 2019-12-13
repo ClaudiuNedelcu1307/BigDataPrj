@@ -8,6 +8,8 @@ class whereNode(Node):
     signDict = {'>': '$gt', '<': '$lt', '>=': '$gte', '<=': '$lte', '!=': '$ne'}
     SIGNS = ['>', '<', '>=', '<=', '!=']
 
+    FUNCTIONS = ['upper', 'lower']
+
     def __init__(self, name, whereConditions):
         super().__init__(name)
         self.whereConditions = whereConditions
@@ -21,12 +23,20 @@ class whereNode(Node):
         except ValueError:
             return False
 
-    def changeOperandBecauseOfNot(self, op):
-        return 
+    def upperFunc(self, input):
+        return input['val'].upper()
+    def lowerFunc(self, input):
+        return input['val'].lower()
 
     def packCondition(self, condition):
         # adaug upper si lower
 
+        for function in self.FUNCTIONS:
+            if function in condition:
+                tempDict = {}
+                tempDict['val'] = condition[condition.index(function) + 1]
+                condition[condition.index(function) + 1] = eval('self.' + function + 'Func' + '(' + str(tempDict) + ')')
+                condition.remove(function)
         if condition[0] == 'not' and condition[2] == 'in':
             return (condition[1], {'$not': {"$in": [word.translate({ord(i): None for i in '(),'}) for word in condition[3:]]}})
 
@@ -81,18 +91,12 @@ class whereNode(Node):
         oneCond = []
         isInStatement = False
         for word in self.whereConditions:
-            # // If the scanned character is an operand, add it to output string. 
+
             if isInStatement or (word not in self.tokens and word not in ['(', ')']): 
-                # if word == 'in':
-                #     isInStatement = True
-                # if word == ')':
-                #     isInStatement = False
-                oneCond.append(word)
-            # // If the scanned character is an ‘(‘, push it to the stack. 
+                oneCond.append(word) 
             elif word == '(':
+                print("SUPER DUPER MAN")
                 self.push(word)
-            # // If the scanned character is an ‘)’, pop and to output string from the stack 
-            # // until an ‘(‘ is encountered. 
             elif word == ')':
                 if len(oneCond) > 0:
                     ns.append(self.packCondition(oneCond))
@@ -104,7 +108,6 @@ class whereNode(Node):
   
                 if self.peek() == '(':
                     self.pop()
-            # //If an operator is scanned 
             elif word in self.tokens: 
                 if len(oneCond) > 0:
                     ns.append(self.packCondition(oneCond))
@@ -116,16 +119,14 @@ class whereNode(Node):
 
                 self.push(word)  
         
-        print("ONECOND: ", oneCond)
         if len(oneCond) > 0:
             ns.append(self.packCondition(oneCond))
             oneCond = []
-        # //Pop all the remaining elements from the stack
+        # Pop all the remaining elements from the stack
         while not(self.peek() == 'N'):
             c3 = self.peek()
             self.pop()
             ns.append(c3)
-        # print(ns)
         return ns
 
     def getInfix(self, exp):
