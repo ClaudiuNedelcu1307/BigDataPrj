@@ -14,7 +14,7 @@ class insertNode(Node):
     
 
     def TransformToNoSQL(self):
-        self.cmd = "db." + self.intoTable[0] + ".insert" 
+        self.cmd = "db." + self.intoTable[0] + ".insert(" 
         mainDict = {}
 
         for i in range(len(self.cols)):
@@ -22,7 +22,7 @@ class insertNode(Node):
         
         self.cmd += str(mainDict)
 
-        self.cmd += ';'
+        self.cmd += ');'
 
     def toString(self):
         return self.cmd
