@@ -6,9 +6,9 @@ class orderNode(Node):
         super().__init__(name)
         self.orderList = orderList
 
-    def createOrderCommand(self):
+    def createOrderCommand(self, cols):
         print("Crash Boom Bang")
-        print(self.orderList)
+        print(cols)
         if len(self.orderList) == 0:
             return ""
 
@@ -18,6 +18,8 @@ class orderNode(Node):
                 retDict[list(retDict.keys())[-1]] = 1
             elif word == 'desc':
                 retDict[list(retDict.keys())[-1]] = -1
+            elif word.isdigit():
+                retDict[cols[int(word) - 1]] = 1
             else:
                 retDict[word] = 1
 

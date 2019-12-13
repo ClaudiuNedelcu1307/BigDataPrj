@@ -29,7 +29,7 @@ class findNode(Node):
 
         # ORDER
         if self.order:
-            self.cmd += self.order.createOrderCommand()
+            self.cmd += self.order.createOrderCommand(self.colsN.getList())
 
         # FINAL
         self.cmd += ');'
