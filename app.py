@@ -62,6 +62,8 @@ def makeCmd(_name, _text):
     print(cmds)
     for cmd in cmds:
         cmd = cmd.replace(';', '')
+        cmd = cmd.replace('(', ' ( ')
+        cmd = cmd.replace(')', ' ) ')
         cmd.lower()
         cmd = re.sub(' +', ' ', cmd.strip())
         textList = cmd.split()
