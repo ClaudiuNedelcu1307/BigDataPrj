@@ -34,12 +34,18 @@ function lightTheUploadModalUp(status, fileName) {
     }
 }
 
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 
+
 $(function() {
     $('#btnSend').click(function() {
         lightTheModalUp(true);
         text = document.getElementById("SQLField").value;
         inputName = 'DA'
         pasteTextArea = document.getElementById("NoSQLField");
+        text = text.replaceAll("&", "and");
         if(inputName) {
             $.ajax({
                 url: '/uploadCmd',
@@ -103,11 +109,18 @@ function sendTransformSignal() {
             console.log(response);
 
             setTimeout(function() {
-                document.getElementById("NoSQLField").value = response['noSQL'];
-                document.getElementById("SQLField").value = response['SQL'];
+                // document.getElementById("NoSQLField").value = $('#sqlFileToUpload')[0].files[0];
+                var preview = document.getElementById("SQLField");
+                var file = $('#sqlFileToUpload')[0].files[0];
+                var reader = new FileReader()
+                reader.onload = function (event) {
+                    preview.value = event.target.result;
+                }
+                reader.readAsText(file);
+                document.getElementById("NoSQLField").value = response['NoSQL'];
                 document.getElementById('id02').style.display='none'
                 lightTheUploadModalUp(false, fileName);
-            }, 1500);
+            }, 150);
         },
         error: function(error) {
             document.getElementById("NoSQLField").value = "Invalid Request!";

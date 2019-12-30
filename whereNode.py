@@ -37,6 +37,7 @@ class whereNode(Node):
                 tempDict['val'] = condition[condition.index(function) + 1]
                 condition[condition.index(function) + 1] = eval('self.' + function + 'Func' + '(' + str(tempDict) + ')')
                 condition.remove(function)
+                
         if condition[0] == 'not' and condition[2] == 'in':
             return (condition[1], {'$not': {"$in": [word.translate({ord(i): None for i in '(),'}) for word in condition[3:]]}})
 

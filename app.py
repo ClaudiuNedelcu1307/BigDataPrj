@@ -6,6 +6,8 @@ from deleteProcess import deleteQ
 from dropProcess import dropQ
 from createProcess import createQ
 from showProcess import showQ
+from useProcess import useQ
+import time
 import re
 from werkzeug.utils import secure_filename
 ############################### FLASK CONFIG ################################
@@ -15,12 +17,12 @@ template_dir = os.path.abspath('.')
 app = Flask(__name__, template_folder=template_dir, root_path=".")
 app.static_folder = 'static'
 UPLOAD_FOLDER = './uploadFiles'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'jpg'}
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'jpg', 'sql'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 160 * 1024 * 1024
 
-validCMDS = ['select', 'delete', 'drop', 'insert', 'update', 'show', 'create']
+validCMDS = ['select', 'delete', 'drop', 'insert', 'update', 'show', 'create', 'use']
 
 @app.route("/")
 def main():
@@ -58,40 +60,50 @@ def uploadCmd():
 
 def makeCmd(_name, _text):
     rezList = []
+    _text = re.sub('--.*?\n', '', _text)
     cmds = re.split("; *\n+", _text)
-    print(cmds)
+    i = 1
     for cmd in cmds:
         cmd = cmd.replace(';', '')
+        cmd = cmd.replace('\n', ' ')
         cmd = cmd.replace('(', ' ( ')
         cmd = cmd.replace(')', ' ) ')
+        cmd = cmd.replace(',', ', ')
         cmd.lower()
         cmd = re.sub(' +', ' ', cmd.strip())
         textList = cmd.split()
-        print(textList)
         # validate the received values
         if textList:
-            if textList[0] in validCMDS:
+            if textList[0].lower() in validCMDS:
+                print('CMD ', textList[0], i)
                 tempDict = {}
                 tempDict['val'] = textList
-                rezEval = eval(str(textList[0]) + 'Q' + '(' + str(tempDict) + ')')
+                rezEval = eval(str(textList[0].lower()) + 'Q' + '(' + str(tempDict) + ')')
                 rezList.append(rezEval)
             else: 
+                print("!!!!!!!!!!!!", textList[0])
                 return 'Put a sock on it !'
-        else:
-            return json.dumps({'html':'<span>Enter the required fields</span>'})
+            i = i + 1
+        # PROBLEME:
+        # DACA AVEM SPATII in stringuri de ex: insert intp emp (id, ename) values (1, 'ABC DEF')
+        # DACA AVEM PARANTEZE in stringuri de ex: insert intp emp (id, ename) values (1, '(ABC) DEF')
+        # 
     
     return '\n'.join(rezList)
 
 @app.route('/resolveFile',methods=['GET'])
 def resolveFile():
     # return {"noSQL":"Two hand pierce", "SQL":"Dead Space Monkey"}
-    _name = request.form.get('fileName')
-    _name = "test.txt"
+    start_time = time.time()
+    _name = request.args.get('fileName')
+    # _name = "test.txt"
     _name = os.path.join(app.config['UPLOAD_FOLDER'], _name)
     f = open(_name, "r")
     sql = f.read()
     noSQL = makeCmd('select', sql)
-    return {"noSQL":noSQL, "SQL":sql}
+    print("GATA BOSS")
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return {"NoSQL":noSQL}
 
 
 

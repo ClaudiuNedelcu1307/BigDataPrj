@@ -5,6 +5,7 @@ class groupFunctionsNode(Node):
     def __init__(self, name, functions):
         super().__init__(name)
         self.arithmetics = ['sum', 'dif']
+        self.counts = ['countstar']
         self.functions = functions
         self.cmd = ''
 
@@ -18,9 +19,11 @@ class groupFunctionsNode(Node):
 
         for (function, initial, obj) in self.functions:
             print(function, initial, obj)
-            line = 'prev.'
+            line = ''
             if self.arithmeticFunc(function):
-                line += initial + ' = prev.' + initial + ' + obj.' + obj + ' - 0;' + '\n'
+                line += 'prev.' + initial + ' = prev.' + initial + ' + obj.' + obj + ' - 0;' + '\n'
+            elif function in self.counts:
+                line += 'if (true != null) if (true instanceof Array) prev.' + initial +' += true.length;\nelse prev.' + initial + '++;\n'
 
             self.cmd += line
         self.cmd += '}'

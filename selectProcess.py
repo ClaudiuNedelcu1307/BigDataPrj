@@ -24,9 +24,9 @@ def find_between(inputList, first, last):
 def makeListsForNodes(inputString):
     key = None
     for word in inputString:
-        if word in tokensDict:
-            key = word
-        elif word in delTokens:
+        if word.lower() in tokensDict:
+            key = word.lower()
+        elif word.lower() in delTokens:
             continue
         else:
             tokensDict[key].append(word)
@@ -39,16 +39,26 @@ def selectQ(inputString):
     print('Ana')
     print(tokensDict)
     if len(tokensDict['group']) > 0:
+        print("CODREA")
         item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['group'])
     else:
+        print("ECHO")
         item = findNode("find", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'])
     item.TransformToNoSQL()
 
     return item.toString()
 
-_text = re.sub(' +', ' ', "select sum(a), sum(b) from Customers where a = 'Uranus' group by a".strip())
+_text = re.sub(' +', ' ', "select sum(a), sum(b) from Customers group by a".strip())
+
+# _text = _text.replace(';', '')
+# _text = _text.replace('(', ' ( ')
+# _text = _text.replace(')', ' ) ')
+# _text = _text.replace(',', ', ')
+# _text.lower()
+# _text = re.sub(' +', ' ', _text.strip())
 textList = _text.split()
 print("Codrin")
 print(textList)
 preparationForSelectQuerry()
+print('Something about BORDEA')
 print(selectQ({'val': textList}))
