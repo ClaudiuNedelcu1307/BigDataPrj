@@ -22,7 +22,6 @@ class groupNode(Node):
         self.order = orderNode("order", [s.strip(',') for s in orderList])
         self.groupList = groupList
         self.cmd = ""
-        # self.creatorulDeInitials(cols)
 
     def taranie(self, cols): # ASTA E MARE TARANIE .. SCHIMBA !!! FA CEVA INTELIGENT 
         # IN LISTA COLS AM : ['sum', '(', 'a', ')', ',', 'b']
@@ -61,10 +60,6 @@ class groupNode(Node):
         mainDict['initials'] = {key: 0 for key in self.initials} 
 
         # GROUP FUNCTIONS
-        # print("MATA PROBEAZA CATALIN NU PROBEAZA")
-        # print(self.functions)
-        # print(self.initials)
-        # print(self.functionsParams)
         grpFncNode = groupFunctionsNode('f', zip(self.functions, self.initials, self.functionsParams))
         grpFncNode.makeFunctions()
         mainDict['reduce'] = str(grpFncNode)
