@@ -38,28 +38,28 @@ class whereNode(Node):
                 condition[condition.index(function) + 1] = eval('self.' + function + 'Func' + '(' + str(tempDict) + ')')
                 condition.remove(function)
                 
-        if condition[0] == 'not' and condition[2] == 'in':
+        if condition[0].lower() == 'not' and condition[2].lower() == 'in':
             return (condition[1], {'$not': {"$in": [word.translate({ord(i): None for i in '(),'}) for word in condition[3:]]}})
 
-        if condition[0] == 'not':
+        if condition[0].lower() == 'not':
             condition.pop(0)
             condition[1] = self.InvOperands[condition[1]]
 
-        if condition[1] == 'not' and condition[2] == 'in':
+        if condition[1].lower() == 'not' and condition[2].lower() == 'in':
             return (condition[0], {'$not': {"$in": [word.translate({ord(i): None for i in '(),'}) for word in condition[3:]]}})
-        elif condition[1] == 'like':
+        elif condition[1].lower() == 'like':
             return (condition[0], condition[2].replace("'", ""))
-        elif condition[1] == 'in':
+        elif condition[1].lower() == 'in':
             return (condition[0], {"$in": [word.translate({ord(i): None for i in '(),'}) for word in condition[2:]]})
-        elif condition[1] == 'is' and condition[2] == 'not':
+        elif condition[1].lower() == 'is' and condition[2].lower() == 'not':
             return (condition[0], {"$ne": condition[3].replace("'", "")})
-        elif condition[1] == 'is':
+        elif condition[1].lower() == 'is':
             return (condition[0], condition[2].replace("'", ""))
         # elif self.RepresentsNumber(condition[0]) == False  and self.RepresentsNumber(condition[2]) == False:
         #     return ("$where", "this." + str(condition[0]) + " " + str(condition[1]) + " this." + str(condition[2]))
-        elif condition[1] in self.SIGNS:
+        elif condition[1].lower() in self.SIGNS:
             return (condition[0].replace("'", ""), {self.signDict[condition[1]]: condition[2].replace("'", "") if not(self.RepresentsNumber(condition[2].replace("'", ""))) else float(condition[2].replace("'", ""))})
-        elif condition[1] == '=':
+        elif condition[1].lower() == '=':
             return (condition[0].replace("'", ""), condition[2].replace("'", "") if not(self.RepresentsNumber(condition[2].replace("'", ""))) else float(condition[2].replace("'", "")))
         
         return (condition[0], None)

@@ -48,14 +48,14 @@ def selectQ(inputString):
 
     return item.toString()
 
-_text = re.sub(' +', ' ', "select sum(a), sum(b) from Customers group by a".strip())
+_text = re.sub(' +', ' ', "select * from Customers where CustomerName like 'a%'".strip())
 
-# _text = _text.replace(';', '')
-# _text = _text.replace('(', ' ( ')
-# _text = _text.replace(')', ' ) ')
-# _text = _text.replace(',', ', ')
-# _text.lower()
-# _text = re.sub(' +', ' ', _text.strip())
+_text = _text.replace(';', '')
+_text = _text.replace('(', ' ( ')
+_text = _text.replace(')', ' ) ')
+_text = _text.replace(',', ', ')
+_text.lower()
+_text = re.sub(' +', ' ', _text.strip())
 textList = _text.split()
 print("Codrin")
 print(textList)

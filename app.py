@@ -1,5 +1,6 @@
 import os
 import sys
+############################ COMENZI ACCEPTATE ##############################
 from selectProcess import selectQ
 from insertProcess import insertQ
 from deleteProcess import deleteQ
@@ -7,9 +8,11 @@ from dropProcess import dropQ
 from createProcess import createQ
 from showProcess import showQ
 from useProcess import useQ
+#############################################################################
 import time
 import re
 from werkzeug.utils import secure_filename
+import sqlite3
 ############################### FLASK CONFIG ################################
 from flask import Flask, render_template, request, json, redirect, url_for, flash
 
@@ -60,6 +63,7 @@ def uploadCmd():
 
 def makeCmd(_name, _text):
     rezList = []
+    # stmnt_list = split_statements(_text)
     _text = re.sub('--.*?\n', '', _text)
     cmds = re.split("; *\n+", _text)
     i = 1
