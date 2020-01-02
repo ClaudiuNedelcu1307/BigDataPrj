@@ -88,10 +88,6 @@ def makeCmd(_name, _text):
                 print("!!!!!!!!!!!!", textList[0])
                 return 'Put a sock on it !'
             i = i + 1
-        # PROBLEME:
-        # DACA AVEM SPATII in stringuri de ex: insert intp emp (id, ename) values (1, 'ABC DEF')
-        # DACA AVEM PARANTEZE in stringuri de ex: insert intp emp (id, ename) values (1, '(ABC) DEF')
-        # 
     
     return '\n'.join(rezList)
 
