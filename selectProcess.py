@@ -60,7 +60,7 @@ def selectQ(inputString):
 
     return item.toString()
 
-_text = re.sub(' +', ' ', "select * from Customers, ma on Customers.id = ma.id where a.b = 'c';".strip())
+_text = re.sub(' +', ' ', "select * from SERIOUS inner join SAM on SERIOUS.id = SAM.id inner join THREE on SAM.a = THREE.a where a.b = 'c';".strip())
 
 _text = _text.replace(';', '')
 _text = _text.replace('(', ' ( ')
