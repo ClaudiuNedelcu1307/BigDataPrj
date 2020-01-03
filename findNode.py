@@ -26,13 +26,15 @@ class findNode(Node):
             self.cmd += ', '
             whereDict = self.whereN.createConditionDict()
             self.cmd += str(whereDict)
+        
+        # FINAL
+        self.cmd += ')'
 
         # ORDER
         if self.order:
             self.cmd += self.order.createOrderCommand(self.colsN.getList())
 
-        # FINAL
-        self.cmd += ');'
+        self.cmd += ';'
 
     def toString(self):
         return self.cmd

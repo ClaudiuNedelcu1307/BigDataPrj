@@ -39,7 +39,6 @@ class joinNode(Node):
         if self.whereN:
             print("Cavendish")
             whereDict = {'$match':{}}
-            # self.cmd += str(whereDict)
             whereDict['$match'] = self.whereN.createConditionDict()
             dictList.append(whereDict)
 

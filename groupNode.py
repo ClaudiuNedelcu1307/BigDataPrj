@@ -49,7 +49,7 @@ class groupNode(Node):
 
     def TransformToNoSQL(self):
         #FROM
-        self.cmd = "db." + self.fromTbl[0] + ".group(" # vor fi mai multe tabele???
+        self.cmd = "db." + self.fromTbl[0] + ".group("
         mainDict = {}
 
         # SELECT
@@ -69,16 +69,17 @@ class groupNode(Node):
             self.cmd += ', '
             whereDict = self.whereN.createConditionDict()
             mainDict['cond'] = whereDict
+        
+        # FINAL
+        self.cmd += str(mainDict)
+        self.cmd += ')'
 
         # ORDER
         if self.order:
             self.cmd += self.order.createOrderCommand(self.colsN.getList())
+        
+        self.cmd += ';'
 
-        # FINAL
-        self.cmd += str(mainDict)
-        self.cmd += ');'
-
-    
     def toString(self):
         return self.cmd
 

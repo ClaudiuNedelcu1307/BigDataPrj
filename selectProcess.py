@@ -11,7 +11,7 @@ groupTokens = []
 def preparationForSelectQuerry():
     global tokensDict, delTokens, groupTokens
     tokensDict = {'select': [], 'from': [], 'where': [], 'order': [], 'group':[], 'inner':[], 'on':[], 'using':[]}
-    delTokens = ['by', ';', 'join']
+    delTokens = ['by', ';']
     groupTokens = ['sum']
 
 def find_between(inputList, first, last):
@@ -27,10 +27,18 @@ def makeListsForNodes(inputString):
     for word in inputString:
         if word.lower() in tokensDict:
             key = word.lower()
+        elif word.lower() == 'join':
+            key = 'inner'
         elif word.lower() in delTokens:
             continue
         else:
             tokensDict[key].append(word)
+    
+    if len(tokensDict['from']) > 1:
+        for item in tokensDict['from'][1:]:
+            tokensDict['inner'] = [item]
+        tokensDict['from'] = [tokensDict['from'][0]]
+
 
 
 def selectQ(inputString):
@@ -52,7 +60,7 @@ def selectQ(inputString):
 
     return item.toString()
 
-_text = re.sub(' +', ' ', "select * from Customers inner join mata on Customers.id = mata.id where a.b = 'c';".strip())
+_text = re.sub(' +', ' ', "select * from Customers, ma on Customers.id = ma.id where a.b = 'c';".strip())
 
 _text = _text.replace(';', '')
 _text = _text.replace('(', ' ( ')

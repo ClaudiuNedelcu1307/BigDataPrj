@@ -23,4 +23,4 @@ class orderNode(Node):
             else:
                 retDict[word] = 1
 
-        return ".sort(" + str(retDict) + ");"
+        return ".sort(" + str(retDict) + ")"
