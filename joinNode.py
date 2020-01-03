@@ -5,7 +5,7 @@ from colsNode import colsNode
 import re
 class joinNode(Node):
     
-    def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using):
+    def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using, alias):
         super().__init__(name)
         print(on)
         print(join)
@@ -16,6 +16,7 @@ class joinNode(Node):
         print(on, 'sfsdf', on[0])
         self.joinCond = on if len(on) > 0 else using
         self.joinTable = join
+        self.alias = alias if len(alias) > 0 else join
         self.cmd = ""
     
     def makeLookups(self):
@@ -23,15 +24,12 @@ class joinNode(Node):
         lookupDicts = []
         unwindDicts = []
         for item in range(3, len(self.joinCond), 3):
-            # print(item)
-            # print(len(self.joinCond))
-            # print(nextJoinTable)
-            # print(len(self.fromTbl))
             auxDict = {'localField': self.joinCond[item], "from":self.joinTable[nextJoinTable], 'foreignField':self.joinCond[item + 2].split('.')[1], 'as':self.joinTable[nextJoinTable]}
             lookupDicts.append(auxDict)
             auxDict2 = {'path': '$' + self.joinTable[nextJoinTable], "preserveNullAndEmptyArrays": False}
             unwindDicts.append(auxDict2)
             nextJoinTable = nextJoinTable + 1 
+    
         return (lookupDicts, unwindDicts)
 
     def TransformToNoSQL(self):

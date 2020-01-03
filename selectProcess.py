@@ -10,7 +10,7 @@ groupTokens = []
 
 def preparationForSelectQuerry():
     global tokensDict, delTokens, groupTokens
-    tokensDict = {'select': [], 'from': [], 'where': [], 'order': [], 'group':[], 'inner':[], 'on':[], 'using':[]}
+    tokensDict = {'select': [], 'from': [], 'where': [], 'order': [], 'group':[], 'inner':[], 'on':[], 'using':[], 'as':[]}
     delTokens = ['by', ';']
     groupTokens = ['sum']
 
@@ -33,6 +33,8 @@ def makeListsForNodes(inputString):
             continue
         else:
             tokensDict[key].append(word)
+            # if key == 'inner' or key == 'from':
+            #     key = 'as'
     
     if len(tokensDict['from']) > 1:
         for item in tokensDict['from'][1:]:
@@ -49,7 +51,7 @@ def selectQ(inputString):
     print(tokensDict)
     if len(tokensDict['inner']) > 0:
         print("SESU")
-        item = joinNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['inner'], tokensDict['on'], tokensDict['using'])
+        item = joinNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['inner'], tokensDict['on'], tokensDict['using'], tokensDict['as'])
     elif len(tokensDict['group']) > 0:
         print("CODREA")
         item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['group'])
