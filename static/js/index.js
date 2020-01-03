@@ -54,7 +54,8 @@ $(function() {
                 type: 'POST',
                 success: function(response) {
                     //console.log(response);
-                    pasteTextArea.value = response;
+                    pasteTextArea.value = response['NoSQL'];
+                    document.getElementById('durrInput').value = response['duration']
                     lightTheModalUp(false);
                 },
                 error: function(error) {
@@ -118,6 +119,7 @@ function sendTransformSignal() {
                 }
                 reader.readAsText(file);
                 document.getElementById("NoSQLField").value = response['NoSQL'];
+                document.getElementById('durrInput').value = response['duration']
                 document.getElementById('id02').style.display='none'
                 lightTheUploadModalUp(false, fileName);
             }, 150);

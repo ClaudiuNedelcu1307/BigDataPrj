@@ -59,7 +59,10 @@ def upload_file():
 def uploadCmd():
     _name = request.form.get('inputName')
     _text = request.form.get('text')
-    return makeCmd(_name, _text)
+    start_time = time.time()
+    noSQL = makeCmd(_name, _text)
+    duration = time.time() - start_time
+    return {"NoSQL":noSQL, 'duration': duration}
 
 def makeCmd(_name, _text):
     rezList = []
@@ -102,8 +105,9 @@ def resolveFile():
     sql = f.read()
     noSQL = makeCmd('select', sql)
     print("GATA BOSS")
-    print("--- %s seconds ---" % (time.time() - start_time))
-    return {"NoSQL":noSQL}
+    duration = time.time() - start_time
+    print("--- %s seconds ---" % (duration))
+    return {"NoSQL":noSQL, 'duration': duration}
 
 
 

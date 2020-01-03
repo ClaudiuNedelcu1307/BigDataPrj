@@ -7,13 +7,10 @@ class joinNode(Node):
     
     def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using, alias):
         super().__init__(name)
-        print(on)
-        print(join)
         self.colsN = colsNode('cols', [s.strip(',') for s in cols])
         self.fromTbl = fromTbl
         self.whereN = whereNode("where", whereConditions) if len(whereConditions) > 0 else None
         self.order = orderNode("order", [s.strip(',') for s in orderList])
-        print(on, 'sfsdf', on[0])
         self.joinCond = on if len(on) > 0 else using
         self.joinTable = join
         self.alias = alias if len(alias) > 0 else join
