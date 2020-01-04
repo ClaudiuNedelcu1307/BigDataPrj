@@ -5,7 +5,7 @@ from colsNode import colsNode
 import re
 class joinNode(Node):
     
-    def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using, alias):
+    def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using, alias, limit):
         super().__init__(name)
         self.colsN = colsNode('cols', [s.strip(',') for s in cols])
         self.fromTbl = fromTbl
@@ -14,6 +14,7 @@ class joinNode(Node):
         self.joinCond = on if len(on) > 0 else using
         self.joinTable = join
         self.alias = alias if len(alias) > 0 else join
+        self.limit = limit[0] if len(limit) > 0 else 0
         self.cmd = ""
     
     def makeLookups(self):

@@ -9,7 +9,7 @@ SPECIALS = ['sum(', 'dif(', 'count(', 'max(', 'min(']
 
 class groupNode(Node):
 
-    def __init__(self, name, cols, fromTbl, whereConditions, orderList, groupList):
+    def __init__(self, name, cols, fromTbl, whereConditions, orderList, groupList, limit):
         super().__init__(name)
         # [re.search('\(([^)]+)', s.strip(',')).group(1) for s in cols]
         cols = self.taranie(cols)
@@ -21,6 +21,7 @@ class groupNode(Node):
         self.whereN = whereNode("where", whereConditions) if len(whereConditions) > 0 else None
         self.order = orderNode("order", [s.strip(',') for s in orderList])
         self.groupList = groupList
+        self.limit = limit[0] if len(limit) > 0 else 0
         self.cmd = ""
 
     def taranie(self, cols): # ASTA E MARE TARANIE .. SCHIMBA !!! FA CEVA INTELIGENT 
@@ -73,6 +74,10 @@ class groupNode(Node):
         # FINAL
         self.cmd += str(mainDict)
         self.cmd += ')'
+
+        # LIMIT
+        if not(self.limit == 0):
+            self.cmd += ".limit(" + self.limit + ")"
 
         # ORDER
         if self.order:

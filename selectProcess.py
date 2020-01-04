@@ -10,7 +10,7 @@ groupTokens = []
 
 def preparationForSelectQuerry():
     global tokensDict, delTokens, groupTokens
-    tokensDict = {'select': [], 'from': [], 'where': [], 'order': [], 'group':[], 'inner':[], 'on':[], 'using':[], 'as':[]}
+    tokensDict = {'select': [], 'from': [], 'where': [], 'order': [], 'group':[], 'inner':[], 'on':[], 'using':[], 'as':[], 'limit': []}
     delTokens = ['by', ';']
     groupTokens = ['sum']
 
@@ -51,18 +51,18 @@ def selectQ(inputString):
     print(tokensDict)
     if len(tokensDict['inner']) > 0:
         print("SESU")
-        item = joinNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['inner'], tokensDict['on'], tokensDict['using'], tokensDict['as'])
+        item = joinNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['inner'], tokensDict['on'], tokensDict['using'], tokensDict['as'], tokensDict['limit'])
     elif len(tokensDict['group']) > 0:
         print("CODREA")
-        item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['group'])
+        item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['group'], tokensDict['limit'])
     else:
         print("ECHO")
-        item = findNode("find", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'])
+        item = findNode("find", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['limit'])
     item.TransformToNoSQL()
 
     return item.toString()
 
-_text = re.sub(' +', ' ', "select * from SERIOUS inner join SAM on SERIOUS.id = SAM.id inner join THREE on SAM.a = THREE.a where a.b = 'c';".strip())
+_text = re.sub(' +', ' ', "select * from SERIOUS where a.b = 'c' LIMIT 5;".strip())
 
 _text = _text.replace(';', '')
 _text = _text.replace('(', ' ( ')

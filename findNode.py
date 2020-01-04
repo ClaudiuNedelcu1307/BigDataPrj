@@ -5,12 +5,13 @@ from colsNode import colsNode
 import re
 class findNode(Node):
     
-    def __init__(self, name, cols, fromTbl, whereConditions, orderList):
+    def __init__(self, name, cols, fromTbl, whereConditions, orderList, limit):
         super().__init__(name)
         self.colsN = colsNode('cols', [s.strip(',') for s in cols])
         self.fromTbl = fromTbl
         self.whereN = whereNode("where", whereConditions) if len(whereConditions) > 0 else None
         self.order = orderNode("order", [s.strip(',') for s in orderList])
+        self.limit = limit[0] if len(limit) > 0 else 0
         self.cmd = ""
 
     def TransformToNoSQL(self):
@@ -29,6 +30,10 @@ class findNode(Node):
         
         # FINAL
         self.cmd += ')'
+
+        # LIMIT
+        if not(self.limit == 0):
+            self.cmd += ".limit(" + self.limit + ")"
 
         # ORDER
         if self.order:
