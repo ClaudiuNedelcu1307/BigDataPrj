@@ -21,31 +21,7 @@ class groupNode(Node):
         self.order = orderNode("order", [s.strip(',') for s in orderList])
         self.groupList = groupList
         self.limit = limit[0] if len(limit) > 0 else 0
-        self.cmd = ""
-
-    def taranie(self, cols): # ASTA E MARE TARANIE .. SCHIMBA !!! FA CEVA INTELIGENT 
-        # IN LISTA COLS AM : ['sum', '(', 'a', ')', ',', 'b']
-        # AM NEVOIE : ['sum(a)', 'b']
-        aux = ''
-        SPECIALS2 = ['sum', 'count', 'min', 'max', 'count', 'avg', '(']
-        newCols = []
-        for word in cols:
-            if word == ',':
-                continue
-            if word == ')':
-                aux += word
-                newCols.append(aux)
-                aux = ''
-            elif word in SPECIALS2:
-                aux += word
-            elif len(aux) > 0:
-                aux += word
-            else:
-                aux += word
-                newCols.append(aux)
-                aux = ''
-        return newCols
-    
+        self.cmd = ""  
 
     def TransformToNoSQL(self):
         #FROM
@@ -66,7 +42,7 @@ class groupNode(Node):
             for item in finalizeList:
                 self.initials.append('count' + item)
 
-        # INITIALS
+        # INITIALS & more
         mainDict['initials'] = {key: 0 for key in self.initials} 
         mainDict['reduce'] = str(grpFncNode)
         if weNeedFinalize:
