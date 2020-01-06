@@ -5,7 +5,6 @@ class colsNode(Node):
     def __init__(self, name, colsList):
         super().__init__(name)
         self.colsList = colsList
-        print(colsList)
 
     def createCols(self):
         if not("*" in self.colsList):

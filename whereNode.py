@@ -96,7 +96,6 @@ class whereNode(Node):
             if isInStatement or (word not in self.tokens and word not in ['(', ')']): 
                 oneCond.append(word) 
             elif word == '(':
-                print("SUPER DUPER MAN")
                 self.push(word)
             elif word == ')':
                 if len(oneCond) > 0:

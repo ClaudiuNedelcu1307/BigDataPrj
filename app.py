@@ -50,10 +50,10 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             flash('File successfully uploaded')
-            return "Mata probeaza, Catalin nu probeaza!"
+            return "Success"
         else:
             #flash('Allowed file types are txt, pdf, png, jpg, jpeg, gif')
-            return 'Fisier prost ca tine'
+            return 'Bad file'
 
 @app.route('/uploadCmd',methods=['POST'])
 def uploadCmd():
@@ -66,7 +66,6 @@ def uploadCmd():
 
 def makeCmd(_name, _text):
     rezList = []
-    # stmnt_list = split_statements(_text)
     _text = re.sub('--.*?\n', '', _text)
     cmds = re.split("; *\n+", _text)
     i = 1
@@ -79,32 +78,30 @@ def makeCmd(_name, _text):
         cmd.lower()
         cmd = re.sub(' +', ' ', cmd.strip())
         textList = cmd.split()
-        # validate the received values
+        # validate the received values validarea comenzi
         if textList:
             if textList[0].lower() in validCMDS:
-                print('CMD ', textList[0], i)
                 tempDict = {}
                 tempDict['val'] = textList
+                # apelare metoda pentru fiecare nod
                 rezEval = eval(str(textList[0].lower()) + 'Q' + '(' + str(tempDict) + ')')
                 rezList.append(rezEval)
             else: 
-                print("!!!!!!!!!!!!", textList[0])
-                return 'Put a sock on it !'
+                rezList.append('The ' + str(i) +' query can not be converted !')
             i = i + 1
     
     return '\n'.join(rezList)
 
 @app.route('/resolveFile',methods=['GET'])
 def resolveFile():
-    # return {"noSQL":"Two hand pierce", "SQL":"Dead Space Monkey"}
     start_time = time.time()
     _name = request.args.get('fileName')
-    # _name = "test.txt"
+
     _name = os.path.join(app.config['UPLOAD_FOLDER'], _name)
     f = open(_name, "r")
     sql = f.read()
     noSQL = makeCmd('select', sql)
-    print("GATA BOSS")
+
     duration = time.time() - start_time
     print("--- %s seconds ---" % (duration))
     return {"NoSQL":noSQL, 'duration': duration}

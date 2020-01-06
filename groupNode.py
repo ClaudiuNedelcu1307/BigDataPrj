@@ -5,13 +5,12 @@ from colsNode import colsNode
 from groupFunctionsNode import groupFunctionsNode
 import re
 
-SPECIALS = ['sum(', 'dif(', 'count(', 'max(', 'min(']
+SPECIALS = ['sum(', 'dif(', 'count(', 'max(', 'min(', 'avg(']
 
 class groupNode(Node):
 
     def __init__(self, name, cols, fromTbl, whereConditions, orderList, groupList, limit):
         super().__init__(name)
-        # [re.search('\(([^)]+)', s.strip(',')).group(1) for s in cols]
         cols = self.taranie(cols)
         self.colsN = colsNode('cols', [s.strip(',') for s in groupList]) 
         self.initials = [s.strip(',').replace('(', '').replace(')', '').replace('*', 'star') for s in cols if any(substring in s for substring in SPECIALS) ]
@@ -28,7 +27,7 @@ class groupNode(Node):
         # IN LISTA COLS AM : ['sum', '(', 'a', ')', ',', 'b']
         # AM NEVOIE : ['sum(a)', 'b']
         aux = ''
-        SPECIALS2 = ['sum', 'count', 'min', 'max', 'count', '(']
+        SPECIALS2 = ['sum', 'count', 'min', 'max', 'count', 'avg', '(']
         newCols = []
         for word in cols:
             if word == ',':
@@ -57,13 +56,21 @@ class groupNode(Node):
         selectDict = self.colsN.createColGroup()
         mainDict['key'] =  selectDict
 
-        # INITIALS
-        mainDict['initials'] = {key: 0 for key in self.initials} 
-
         # GROUP FUNCTIONS
         grpFncNode = groupFunctionsNode('f', zip(self.functions, self.initials, self.functionsParams))
-        grpFncNode.makeFunctions()
+        (weNeedFinalize, finalizeList) = grpFncNode.makeFunctions()
+
+        # FINALIZE
+        if weNeedFinalize == True:
+            strFinalize = self.makeFinalize(finalizeList)
+            for item in finalizeList:
+                self.initials.append('count' + item)
+
+        # INITIALS
+        mainDict['initials'] = {key: 0 for key in self.initials} 
         mainDict['reduce'] = str(grpFncNode)
+        if weNeedFinalize:
+            mainDict['finalize'] = strFinalize
 
         # WHERE
         if self.whereN:
@@ -92,3 +99,14 @@ class groupNode(Node):
         print(self.cmd)
         return ""
 
+    def makeFinalize(self, finalizeList):
+        cmd = 'function(prev) {\n'
+
+        for item in finalizeList:
+            line = ''
+            line += 'prev.average' + item + ' = prev.' + item + ' / prev.' + 'count' + item + '\n'
+            line += 'delete ' + 'count' + item + ' \n'
+            line += 'delete ' + item + ' \n'
+            cmd += line
+        cmd += '}'
+        return cmd

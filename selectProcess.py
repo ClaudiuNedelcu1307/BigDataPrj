@@ -33,8 +33,6 @@ def makeListsForNodes(inputString):
             continue
         else:
             tokensDict[key].append(word)
-            # if key == 'inner' or key == 'from':
-            #     key = 'as'
     
     if len(tokensDict['from']) > 1:
         for item in tokensDict['from'][1:]:
@@ -47,32 +45,28 @@ def selectQ(inputString):
     preparationForSelectQuerry()
     inputString = inputString['val']
     makeListsForNodes(inputString)
-    print('Ana')
-    print(tokensDict)
+
     if len(tokensDict['inner']) > 0:
-        print("SESU")
         item = joinNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['inner'], tokensDict['on'], tokensDict['using'], tokensDict['as'], tokensDict['limit'])
     elif len(tokensDict['group']) > 0:
-        print("CODREA")
         item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['group'], tokensDict['limit'])
     else:
-        print("ECHO")
         item = findNode("find", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['limit'])
     item.TransformToNoSQL()
 
     return item.toString()
 
-_text = re.sub(' +', ' ', "select * from SERIOUS where a.b = 'c' LIMIT 5;".strip())
+# _text = re.sub(' +', ' ', "select avg(a) from emp where a.b = 'c' group by a;".strip())
 
-_text = _text.replace(';', '')
-_text = _text.replace('(', ' ( ')
-_text = _text.replace(')', ' ) ')
-_text = _text.replace(',', ', ')
-_text.lower()
-_text = re.sub(' +', ' ', _text.strip())
-textList = _text.split()
-print("Codrin")
-print(textList)
-preparationForSelectQuerry()
-print('Something about BORDEA')
-print(selectQ({'val': textList}))
+# _text = _text.replace(';', '')
+# _text = _text.replace('(', ' ( ')
+# _text = _text.replace(')', ' ) ')
+# _text = _text.replace(',', ', ')
+# _text.lower()
+# _text = re.sub(' +', ' ', _text.strip())
+# textList = _text.split()
+# print("Codrin")
+# print(textList)
+# preparationForSelectQuerry()
+# print('Something about BORDEA')
+# print(selectQ({'val': textList}))

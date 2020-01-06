@@ -16,7 +16,7 @@ class findNode(Node):
 
     def TransformToNoSQL(self):
         #FROM
-        self.cmd = "db." + self.fromTbl[0] + ".find(" # vor fi mai multe tabele???
+        self.cmd = "db." + self.fromTbl[0] + ".find("
 
         # SELECT
         selectDict = self.colsN.createCols()

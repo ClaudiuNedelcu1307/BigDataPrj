@@ -7,8 +7,6 @@ class orderNode(Node):
         self.orderList = orderList
 
     def createOrderCommand(self, cols):
-        print("Crash Boom Bang")
-        print(cols)
         if len(self.orderList) == 0:
             return ""
 

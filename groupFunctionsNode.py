@@ -16,9 +16,10 @@ class groupFunctionsNode(Node):
 
     def makeFunctions(self):
         self.cmd += 'function(prev, obj) {\n'
+        weNeedFinalize = False
+        finalizeList = []
 
         for (function, initial, obj) in self.functions:
-            print(function, initial, obj)
             line = ''
             if self.arithmeticFunc(function):
                 line += 'prev.' + initial + ' = prev.' + initial + ' + obj.' + obj + ' - 0;' + '\n'
@@ -36,9 +37,15 @@ class groupFunctionsNode(Node):
                 line += 'prev.'+ initial + ' = isNaN(prev. '+ initial + ' ? obj.' + obj + ' : Math.max(prev.' + initial + ', obj.' + obj + ');\n'
             elif function == 'min':
                 line += 'prev.'+ initial + ' = isNaN(prev. '+ initial + ' ? obj.' + obj + ' : Math.min(prev.' + initial + ', obj.' + obj + ');\n'
+            elif function == 'avg':
+                weNeedFinalize = True
+                finalizeList.append(initial)
+                line += 'prev.' + initial + ' = prev.' + initial + ' + obj.' + obj + ' - 0;' + '\n'
+                line += 'prev.count' + initial + '++'
 
             self.cmd += line
         self.cmd += '}'
+        return (weNeedFinalize, finalizeList)
 
     def __str__(self):
         return self.cmd
