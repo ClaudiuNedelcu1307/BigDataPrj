@@ -50,7 +50,6 @@ class groupNode(Node):
 
         # WHERE
         if self.whereN:
-            self.cmd += ', '
             whereDict = self.whereN.createConditionDict()
             mainDict['cond'] = whereDict
         
