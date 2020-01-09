@@ -20,7 +20,7 @@ template_dir = os.path.abspath('.')
 app = Flask(__name__, template_folder=template_dir, root_path=".")
 app.static_folder = 'static'
 UPLOAD_FOLDER = './uploadFiles'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'jpg', 'sql'}
+ALLOWED_EXTENSIONS = {'txt', 'jpg', 'sql'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 160 * 1024 * 1024

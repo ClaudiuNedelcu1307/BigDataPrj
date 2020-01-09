@@ -71,33 +71,40 @@ $(function() {
     });
 });
 
-$(function() {
-    $('#sqlFileToUploadBtn').click(function() {
-        
-        var fd = new FormData();
-        var fileName = $('#sqlFileToUpload')[0].files[0] ? $('#sqlFileToUpload')[0].files[0].name : "null";
-        fd.append('file', $('#sqlFileToUpload')[0].files[0]);
-        fd.append('id', "75");
-        $.ajax({
-            url: '/uploadFile',
-            type: 'POST',
-            data: fd,
-            contentType: false,
-            processData: false,
-            success: function(data){
-                console.log(data);
+
+function uploadNormal()
+{
+    document.getElementById('id02').style.display='block';
+    var fd = new FormData();
+    var fileName = $('#sqlFileToUpload')[0].files[0] ? $('#sqlFileToUpload')[0].files[0].name : "null";
+    fd.append('file', $('#sqlFileToUpload')[0].files[0]);
+    fd.append('id', "75");
+    $.ajax({
+        url: '/uploadFile',
+        type: 'POST',
+        data: fd,
+        contentType: false,
+        processData: false,
+        success: function(data){
+            console.log(data);
+            if (data === 'Bad file') {
+                document.getElementById("finishLine").style.display = "block";
+                document.getElementById("miculX").style.display = "block";
+                document.getElementById("finishLine").innerHTML = "Your file " + fileName + " is not supported";
+            } else {
                 setTimeout(function() {
                     lightTheUploadModalUp(true, fileName);
                 }, 2000);
-            },
-            error: function(error){
-                alert('eroare');
-                document.getElementById("miculX").style.display = "block";
-                document.getElementById("finishLine").innerHTML = "Your file " + fileName + " is: " + error;
             }
-        });
+        },
+        error: function(error){
+            alert('eroare');
+            document.getElementById("finishLine").style.display = "block";
+            document.getElementById("miculX").style.display = "block";
+            document.getElementById("finishLine").innerHTML = "Your file " + fileName + " is: " + error;
+        }
     });
-});
+}
 
 function sendTransformSignal() {
     var fileName = $('#sqlFileToUpload')[0].files[0] ? $('#sqlFileToUpload')[0].files[0].name : "null";
