@@ -21,6 +21,14 @@ class colsNode(Node):
                 colsDict[str(col)] = True
             return colsDict
         return {}
+    
+    def createColGroupJoin(self):
+        if not("*" in self.colsList):
+            colsDict = {}
+            for col in self.colsList:
+                colsDict[str(col)] = '$_id.' + str(col)
+            return colsDict
+        return {}
 
     def getList(self):
         return self.colsList

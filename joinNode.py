@@ -5,9 +5,13 @@ from colsNode import colsNode
 import re
 class joinNode(Node):
     
-    def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using, alias, limit):
+    def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using, alias, limit, groupList):
         super().__init__(name)
-        self.colsN = colsNode('cols', [s.strip(',') for s in cols])
+        if len(groupList) > 0:
+            cols = self.taranie(cols)
+            self.colsN = colsNode('cols', [s.strip(',') for s in groupList])
+        else:
+            self.colsN = colsNode('cols', [s.strip(',') for s in cols])
         self.fromTbl = fromTbl
         self.whereN = whereNode("where", whereConditions) if len(whereConditions) > 0 else None
         self.order = orderNode("order", [s.strip(',') for s in orderList])
@@ -15,6 +19,10 @@ class joinNode(Node):
         self.joinTable = join
         self.alias = alias if len(alias) > 0 else join
         self.limit = limit[0] if len(limit) > 0 else 0
+        self.groupList = groupList
+        print("SERIOUS SAM 4")
+        print(self.colsN)
+        print(self.groupList)
         self.cmd = ""
     
     def makeLookups(self):
@@ -62,6 +70,14 @@ class joinNode(Node):
             whereDict = {'$match':{}}
             whereDict['$match'] = self.whereN.createConditionDict()
             dictList.append(whereDict)
+        
+        # GROUP
+        
+        # SELECT 
+        selectDict = self.colsN.createColGroupJoin()
+        if len(selectDict) > 0:
+            projectSelectDict = {'$project': selectDict}
+            dictList.append(projectSelectDict)
 
         # FINAL
         self.cmd += str(dictList)

@@ -47,7 +47,7 @@ def selectQ(inputString):
     makeListsForNodes(inputString)
 
     if len(tokensDict['inner']) > 0:
-        item = joinNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['inner'], tokensDict['on'], tokensDict['using'], tokensDict['as'], tokensDict['limit'])
+        item = joinNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['inner'], tokensDict['on'], tokensDict['using'], tokensDict['as'], tokensDict['limit'], tokensDict['group'])
     elif len(tokensDict['group']) > 0:
         item = groupNode("group", tokensDict['select'], tokensDict['from'], tokensDict['where'], tokensDict['order'], tokensDict['group'], tokensDict['limit'])
     else:
@@ -56,7 +56,7 @@ def selectQ(inputString):
 
     return item.toString()
 
-# _text = re.sub(' +', ' ', "select avg(a) from emp where a.b = 'c' group by a;".strip())
+# _text = re.sub(' +', ' ', "select a, sum(a) from emp inner join SAM on emp.id = SAM.nr group by a;".strip())
 
 # _text = _text.replace(';', '')
 # _text = _text.replace('(', ' ( ')
