@@ -1,13 +1,3 @@
-COMMANDS = ['select', 'create', 'insert', 'delete', 'show']
-
-function checkIfQuery(inputString) {
-    inputString = inputString.split(" ");
-    if(COMMANDS.indexOf(inputString[0]) < 0) {
-        return false;
-    }
-    return inputString[0];
-}
-
 function lightTheModalUp(status) {
     if(status == true) {
         document.getElementById("id01").style.display = "block";
