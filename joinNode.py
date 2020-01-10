@@ -87,6 +87,10 @@ class joinNode(Node):
         if self.order:
             self.cmd += self.order.createOrderCommand(self.colsN.getList())
         
+        # LIMIT
+        if not(self.limit == 0):
+            self.cmd += ".limit(" + self.limit + ")"
+        
         self.cmd += ';'
 
     def toString(self):
