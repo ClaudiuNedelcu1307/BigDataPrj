@@ -62,15 +62,16 @@ class joinNode(Node):
             whereDict = {'$match':{}}
             whereDict['$match'] = self.whereN.createConditionDict()
             dictList.append(whereDict)
-        
-
-        # ORDER
-        # if self.order:
-        #     self.cmd += self.order.createOrderCommand(self.colsN.getList())
 
         # FINAL
         self.cmd += str(dictList)
-        self.cmd += ');'
+        self.cmd += ')'
+
+        # ORDER
+        if self.order:
+            self.cmd += self.order.createOrderCommand(self.colsN.getList())
+        
+        self.cmd += ';'
 
     def toString(self):
         return self.cmd
