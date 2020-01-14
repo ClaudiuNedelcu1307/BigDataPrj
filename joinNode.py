@@ -9,7 +9,7 @@ class joinNode(Node):
         super().__init__(name)
         if len(groupList) > 0:
             cols = self.taranie(cols)
-            self.colsN = colsNode('cols', [s.strip(',') for s in groupList])
+            self.colsN = colsNode('colsGroup', [s.strip(',') for s in groupList])
         else:
             self.colsN = colsNode('cols', [s.strip(',') for s in cols])
         self.fromTbl = fromTbl
