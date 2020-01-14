@@ -11,7 +11,7 @@ class groupNode(Node):
 
     def __init__(self, name, cols, fromTbl, whereConditions, orderList, groupList, limit):
         super().__init__(name)
-        cols = self.taranie(cols)
+        cols = self.repair(cols)
         self.colsN = colsNode('cols', [s.strip(',') for s in groupList]) 
         self.initials = [s.strip(',').replace('(', '').replace(')', '').replace('*', 'star') for s in cols if any(substring in s for substring in SPECIALS) ]
         self.functions = [s.strip(',').split('(')[0] for s in cols if any(substring in s for substring in SPECIALS) ]

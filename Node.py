@@ -7,9 +7,7 @@ class Node:
     def TransformToNoSQL(self):
         print("Nu.i bine Jonule")
 
-    def taranie(self, cols): # ASTA E MARE TARANIE .. SCHIMBA !!! FA CEVA INTELIGENT 
-        # IN LISTA COLS AM : ['sum', '(', 'a', ')', ',', 'b']
-        # AM NEVOIE : ['sum(a)', 'b']
+    def repair(self, cols):
         aux = ''
         SPECIALS2 = ['sum', 'count', 'min', 'max', 'count', 'avg', '(']
         newCols = []
@@ -20,7 +18,7 @@ class Node:
                 aux += word
                 newCols.append(aux)
                 aux = ''
-            elif word in SPECIALS2:
+            elif word.lower() in SPECIALS2:
                 aux += word
             elif len(aux) > 0:
                 aux += word

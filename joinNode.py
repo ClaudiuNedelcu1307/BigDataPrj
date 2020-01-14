@@ -8,7 +8,7 @@ class joinNode(Node):
     def __init__(self, name, cols, fromTbl, whereConditions, orderList, join, on, using, alias, limit, groupList):
         super().__init__(name)
         if len(groupList) > 0:
-            cols = self.taranie(cols)
+            cols = self.repair(cols)
             self.colsN = colsNode('colsGroup', [s.strip(',') for s in groupList])
         else:
             self.colsN = colsNode('cols', [s.strip(',') for s in cols])
@@ -77,8 +77,10 @@ class joinNode(Node):
             for col in self.cols:
                 if self.fct(col):
                     auxDict[col] = {}
-                    auxDict[col]['$' + col.split('(')[0]] = col.split('(')[1]
-                    pass
+                    if col.split('(')[1] == '*)':
+                        auxDict[col]['$' + col.split('(')[0]] = 'NumberInt(1)'
+                    else:
+                        auxDict[col]['$' + col.split('(')[0]] = col.split('(')[1]
                 else:
                     auxDict['_id'][col] = col
             groupDict['$group'] = auxDict
@@ -106,7 +108,7 @@ class joinNode(Node):
         self.cmd += ';'
     
     def fct(self, item):
-        if item.split('(')[0] in ['count', 'sum', 'avg', 'max', 'min']:
+        if item.split('(')[0].lower() in ['count', 'sum', 'avg', 'max', 'min']:
             return True
         else:
             return False

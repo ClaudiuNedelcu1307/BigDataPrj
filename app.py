@@ -87,8 +87,11 @@ def makeCmd(_name, _text):
                 tempDict = {}
                 tempDict['val'] = textList
                 # apelare metoda pentru fiecare nod
-                rezEval = eval(str(textList[0].lower()) + 'Q' + '(' + str(tempDict) + ')')
-                rezList.append(rezEval)
+                try:
+                    rezEval = eval(str(textList[0].lower()) + 'Q' + '(' + str(tempDict) + ')')
+                    rezList.append(rezEval)
+                except:
+                    rezList.append('Invalid Command ' + str(i))
             else: 
                 rezList.append('The ' + str(i) +' query can not be converted !')
             i = i + 1
