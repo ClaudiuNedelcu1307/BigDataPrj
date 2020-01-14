@@ -71,6 +71,9 @@ def makeCmd(_name, _text):
     i = 1
     for cmd in cmds:
         cmd = cmd.replace(';', '')
+        cmd = re.sub(r'\'.*?\'', lambda x: ''.join(x.group(0).split()), cmd)
+        cmd = re.sub(r'\'.*?\'', lambda x: ''.join(x.group(0).split('(')), cmd)
+        cmd = re.sub(r'\'.*?\'', lambda x: ''.join(x.group(0).split(')')), cmd)
         cmd = cmd.replace('\n', ' ')
         cmd = cmd.replace('(', ' ( ')
         cmd = cmd.replace(')', ' ) ')

@@ -55,7 +55,7 @@ class groupNode(Node):
         
         # FINAL
         self.cmd += str(mainDict)
-        self.cmd += ')'
+        self.cmd += ')\n'
 
         # LIMIT
         if not(self.limit == 0):

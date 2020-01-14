@@ -105,13 +105,14 @@
             <div class="row container spacing">
                 <div class="col-lg-6">
                     <h3 class="sellGear-title">SQL</h3>
-                    <textarea id="SQLField"  oninput="ShouldTransform()" placeholder="SQL Statements">select * from emp where (a > b and b > c) and a > b;</textarea>
+                    <textarea id="SQLField"  oninput="ShouldTransform()" placeholder="SQL Statements">select a, sum(a) from emp inner join SERIOUS on emp.a = SERIOUS.b group by a;</textarea>
                 </div>
                 <div class="col-lg-6">
                     <h3 class="sellGear-title">NoSQL for MongoDB</h3>
                     <textarea id="NoSQLField" class="left-10" readonly>                   
                         
                     </textarea>
+                    <!-- select * from emp where (a > b and b > c) and a > b; -->
                 </div>
             </div>
             <br>

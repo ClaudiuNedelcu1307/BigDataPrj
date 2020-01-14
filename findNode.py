@@ -29,11 +29,11 @@ class findNode(Node):
             self.cmd += str(whereDict)
         
         # FINAL
-        self.cmd += ')'
+        self.cmd += ')\n'
 
         # LIMIT
         if not(self.limit == 0):
-            self.cmd += ".limit(" + self.limit + ")"
+            self.cmd += ".limit(" + self.limit + ")\n"
 
         # ORDER
         if self.order:

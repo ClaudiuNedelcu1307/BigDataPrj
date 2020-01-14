@@ -56,17 +56,3 @@ def selectQ(inputString):
 
     return item.toString()
 
-# _text = re.sub(' +', ' ', "select a, sum(a) from emp inner join SAM on emp.id = SAM.nr group by a;".strip())
-
-# _text = _text.replace(';', '')
-# _text = _text.replace('(', ' ( ')
-# _text = _text.replace(')', ' ) ')
-# _text = _text.replace(',', ', ')
-# _text.lower()
-# _text = re.sub(' +', ' ', _text.strip())
-# textList = _text.split()
-# print("Codrin")
-# print(textList)
-# preparationForSelectQuerry()
-# print('Something about BORDEA')
-# print(selectQ({'val': textList}))

@@ -12,6 +12,7 @@ class joinNode(Node):
             self.colsN = colsNode('colsGroup', [s.strip(',') for s in groupList])
         else:
             self.colsN = colsNode('cols', [s.strip(',') for s in cols])
+        self.cols = cols
         self.fromTbl = fromTbl
         self.whereN = whereNode("where", whereConditions) if len(whereConditions) > 0 else None
         self.order = orderNode("order", [s.strip(',') for s in orderList])
@@ -20,9 +21,6 @@ class joinNode(Node):
         self.alias = alias if len(alias) > 0 else join
         self.limit = limit[0] if len(limit) > 0 else 0
         self.groupList = groupList
-        print("SERIOUS SAM 4")
-        print(self.colsN)
-        print(self.groupList)
         self.cmd = ""
     
     def makeLookups(self):
@@ -72,6 +70,20 @@ class joinNode(Node):
             dictList.append(whereDict)
         
         # GROUP
+        if len(self.groupList) > 0:
+            groupDict = {'$group':{}}
+            auxDict = {}
+            auxDict['_id'] = {}
+            for col in self.cols:
+                if self.fct(col):
+                    auxDict[col] = {}
+                    auxDict[col]['$' + col.split('(')[0]] = col.split('(')[1]
+                    pass
+                else:
+                    auxDict['_id'][col] = col
+            groupDict['$group'] = auxDict
+            dictList.append(groupDict)
+
         
         # SELECT 
         selectDict = self.colsN.createColGroupJoin()
@@ -92,6 +104,12 @@ class joinNode(Node):
             self.cmd += ".limit(" + self.limit + ")"
         
         self.cmd += ';'
+    
+    def fct(self, item):
+        if item.split('(')[0] in ['count', 'sum', 'avg', 'max', 'min']:
+            return True
+        else:
+            return False
 
     def toString(self):
         return self.cmd

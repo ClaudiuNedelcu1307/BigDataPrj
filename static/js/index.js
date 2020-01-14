@@ -44,7 +44,9 @@ $(function() {
                 type: 'POST',
                 success: function(response) {
                     //console.log(response);
-                    pasteTextArea.value = response['NoSQL'];
+                    aux = response['NoSQL'].replaceAll('\\n','\r\n');
+                    pasteTextArea.value = aux;
+                    console.log(aux)
                     document.getElementById('durrInput').value = response['duration']
                     lightTheModalUp(false);
                 },
