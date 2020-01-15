@@ -1,0 +1,105 @@
+
+#homeTitle {font-weight:1000;font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 4.5rem;}
+a{color:#212529;transition:all .2s}
+a:focus,a:hover{
+    color:#0085a1
+}
+
+
+::-moz-selection{
+    color:#fff;
+    background:#0085a1;
+    text-shadow:none;
+}
+::selection{
+    color:#fff;
+    background:#0085a1;
+    text-shadow:none;
+}
+img::-moz-selection{
+    color:#fff;
+    background:0 0;
+}
+img::selection{
+    color:#fff;
+    background:0 0;
+}
+img::-moz-selection{
+    color:#fff;
+    background:0 0;
+}
+#mainNav{
+    position:absolute;
+    border-bottom:1px solid #e9ecef;
+    background-color:#fff;
+    font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+#mainNav .navbar-brand{
+    font-weight:800;
+    color:#343a40;
+}
+
+#mainNav .navbar-nav>li.nav-item>a{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+#mainNav{
+    border-bottom:1px solid transparent;
+    background:0 0;
+}
+#mainNav .navbar-brand{
+    padding:10px 20px;
+    color:#fff;
+}
+#mainNav .navbar-brand:focus,#mainNav .navbar-brand:hover{
+    color:rgba(255,255,255,.8);
+}
+#mainNav .navbar-nav>li.nav-item>a{
+    padding:10px 20px;
+    color:#fff;
+}
+#mainNav .navbar-nav>li.nav-item>a:focus,#mainNav .navbar-nav>li.nav-item>a:hover{
+    color:rgba(255,255,255,.8);
+}
+
+header.masthead{
+    margin-bottom:50px;
+    background:no-repeat center center;
+    background-color:#868e96;
+    background-attachment:scroll;
+    position:relative;
+    background-size:cover;
+}
+header.masthead .overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-color:#212529;
+    opacity:.5;
+}
+header.masthead .page-heading,header.masthead .post-heading,header.masthead .site-heading{
+    padding:200px 0 150px;
+    color:#fff;
+}
+header.masthead .page-heading,header.masthead .site-heading{
+    text-align:center;
+}
+
+header.masthead .page-heading .subheading,header.masthead .site-heading .subheading{
+    font-size:40px;
+    font-weight:300;
+    line-height:1.1;
+    display:block;
+    margin:10px 0 0;
+    font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+
+textarea:focus {
+    background: none repeat scroll 0 0 #FFFFFF;
+    outline-width: 0;
+}

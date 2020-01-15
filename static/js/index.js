@@ -1,9 +1,20 @@
+
 function lightTheModalUp(status) {
     if(status == true) {
         document.getElementById("id01").style.display = "block";
     } else {
         document.getElementById("id01").style.display = "none";
     }
+}
+
+function passedFunc(x, y) {
+    document.getElementById('resultFinal').style.color = "black";
+    if(x === y) {
+        document.getElementById('resultFinal').style.color = "green";
+    } else {
+        document.getElementById('resultFinal').style.color = "red";
+    }
+
 }
 
 function lightTheUploadModalUp(status, fileName) {
@@ -48,6 +59,9 @@ $(function() {
                     pasteTextArea.value = aux;
                     console.log(aux)
                     document.getElementById('durrInput').value = response['duration']
+                    document.getElementById('numInput').value = response['nums']
+                    passedFunc(response['nums'], response['succ']);
+                    document.getElementById('resultFinal').innerHTML = "Result: "+ response['succ'] + "/" + response['nums'] +" passed";
                     lightTheModalUp(false);
                 },
                 error: function(error) {
@@ -118,8 +132,12 @@ function sendTransformSignal() {
                 }
                 reader.readAsText(file);
                 document.getElementById("NoSQLField").value = response['NoSQL'];
-                document.getElementById('durrInput').value = response['duration']
-                document.getElementById('id02').style.display='none'
+                document.getElementById('durrInput').value = response['duration'];
+                document.getElementById('numInput').value = response['nums'];
+                passedFunc(response['nums'], response['succ']);
+                document.getElementById('resultFinal').innerHTML = "Result: "+ response['succ'] + "/" + response['nums'] +" passed";
+                document.getElementById('id02').style.display='none';
+                
                 lightTheUploadModalUp(false, fileName);
             }, 150);
         },

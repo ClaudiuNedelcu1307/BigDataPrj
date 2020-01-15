@@ -1,96 +1,59 @@
-#meniu {
-  position: fixed;
-  width: 100%;
-  z-index: 100;
-}
-#meniu > ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: transparent;
-  }
+/* Required for full background image */
 
-#meniu > ul li {
-    float: left;
-    border-right:1px solid #bbb;
-    width: 120px;
-    text-align: center;
+html,
+body,
+header,
+.view {
+  height: 100%;
 }
 
-  
-#meniu li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    width:100%;
+@media (max-width: 740px) {
+  html,
+  body,
+  header,
+  .view {
+    height: 1000px;
   }
-  
-  #meniu li a:hover:not(.active) {
-    background-color: #111;
+}
+@media (min-width: 800px) and (max-width: 850px) {
+  html,
+  body,
+  header,
+  .view {
+    height: 600px;
   }
-  
-  #meniu .active {
-    background-color: #4CAF50;
-  }
-
-  #meniu li a, .dropbtn {
-    display: inline-block;
-    color: #00ffff;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  #meniu li a:hover, .dropdown:hover .dropbtn {
-    background-color: red;
-  }
-  
-  #meniu li.dropdown {
-    display: inline-block;
-  }
-  
-  #meniu .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: transparent;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-#meniu .dropdown-content a {
-    color: #00ffff;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-  
-#meniu .dropdown-content a:hover {background-color: #f1f1f1}
-  
-#meniu  li.dropdown:hover div.dropdown-content {
-    display: block;
-    position: fixed;
 }
 
-.item-navbar {
-    max-height: 500px;
-    height: 500px;
-    padding: 37px 0;
-    color: #fff;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.btn .fa {
+  margin-left: 3px;
 }
 
-.item-navbar-min {
-  max-height: 250px;
-  height: 250px;
-  padding: 37px 0;
-  color: #fff;
-  background-size: cover;
-  background-position: center center;
+.top-nav-collapse {
+  background-color: #424f95 !important;
+}
+
+.navbar:not(.top-nav-collapse) {
+  background: transparent !important;
+}
+
+@media (max-width: 991px) {
+  .navbar:not(.top-nav-collapse) {
+    background: #424f95 !important;
+  }
+}
+
+.btn-white {
+  color: black !important;
+}
+
+h6 {
+  line-height: 1.7;
+}
+
+.rgba-gradient {
+  background: -moz-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: -webkit-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: -webkit-gradient(linear, 45deg, from(rgba(42, 27, 161, 0.7)), to(rgba(29, 210, 177, 0.7)));
+  background: -o-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
+  background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
 }

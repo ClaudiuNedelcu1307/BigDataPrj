@@ -7,9 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clean-blog.min.css') }}">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -29,20 +35,37 @@
 
 </head>
 <body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="#">SimpleQT</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Home</a>
+          </li>
+        </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('static/images/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1 id="homeTitle">Query Translator</h1>
+            <span class="subheading">Convert MySQL queries to NoSQL for MongoDB syntax</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+        
+
  
     <div class="container">
-        <div class="header">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="#">Home</a>
-                    </li>
-                    <!-- <li role="presentation"><a href="#">Log In</a> -->
-                    <!-- </li> -->
-                    </li>
-                </ul>
-            </nav>
-            <h3 class="text-muted">Query Translator</h3>
-        </div>
         <section style="background-color: #fafafa;width: 1160px;">
             <div class="row container spacing padding-top-10">
                 <div class="col-lg-12">
@@ -96,36 +119,40 @@
                 <div class="col-lg-4 text-align-center"></div>
             </div>
             <div class="row container spacing padding-top-10">
-                <div class="col-lg-4 text-align-center"></div>
-                <div class="col-lg-4 text-align-center">
-                    <p class="text-align-center"><button class="btn btn-lg btn-success" onclick="console.log('hatz')" id="btnSend">Transform</button></p><br>
-                </div>
-                <div class="col-lg-4 text-align-center"></div>
+                
             </div>
             <div class="row container spacing">
                 <div class="col-lg-6">
                     <h3 class="sellGear-title">SQL</h3>
-                    <textarea id="SQLField"  oninput="ShouldTransform()" placeholder="SQL Statements">select a, sum(a) from emp inner join SERIOUS on emp.a = SERIOUS.b group by a;</textarea>
+                    <textarea id="SQLField" class=".lined"  oninput="ShouldTransform()" placeholder="SQL Statements">select a, sum(a) from emp inner join SERIOUS on emp.a = SERIOUS.b group by a;</textarea>
                 </div>
                 <div class="col-lg-6">
                     <h3 class="sellGear-title">NoSQL for MongoDB</h3>
                     <textarea id="NoSQLField" class="left-10" readonly>                   
                         
-                    </textarea>
+                    </textarea><br>
+                    <p class="text-align-center" id="resultFinal"></p>
                     <!-- select * from emp where (a > b and b > c) and a > b; -->
                 </div>
+                <div class="col-lg-4 text-align-center"></div>
+                <div class="col-lg-4 text-align-center">
+                    <p class="text-align-center"><button class="btn btn-primary btn-lg btn-block" onclick="console.log('hatz')" id="btnSend">Transform</button></p><br>
+                </div>
+                <div class="col-lg-4 text-align-center"></div>
             </div>
             <br>
             <div class="row container spacing">
                 <div class="col-lg-6">
-                    <label for="durrInput">Conversion duration:</label>
-                    <input id="durrInput" type="number" placeholder="0" name="durrInput" readonly> <span>seconds</span>
+                    <label for="durrInput">Conversion duration in seconds:</label>
+                    <input id="durrInput" class="form-control" type="number" placeholder="0" name="durrInput" readonly> 
+                    <label for="numInput">Number of instructions:</label>
+                    <input id="numInput" class="form-control" type="number" placeholder="0" name="numInput" readonly> <br><br>
                 </div>
             </div>
         </section>
  
         <footer class="footer">
-            <p>&copy; H 2019</p>
+            <p>&copy; SmartQT 2019</p>
         </footer>
  
     </div>
