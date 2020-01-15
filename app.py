@@ -20,7 +20,7 @@ template_dir = os.path.abspath('.')
 app = Flask(__name__, template_folder=template_dir, root_path=".")
 app.static_folder = 'static'
 UPLOAD_FOLDER = './uploadFiles'
-ALLOWED_EXTENSIONS = {'txt', 'jpg', 'sql'}
+ALLOWED_EXTENSIONS = {'txt', 'sql'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 160 * 1024 * 1024
@@ -60,15 +60,16 @@ def uploadCmd():
     _name = request.form.get('inputName')
     _text = request.form.get('text')
     start_time = time.time()
-    noSQL = makeCmd(_name, _text)
+    (noSQL, nums, succ) = makeCmd('select', _text)
     duration = time.time() - start_time
-    return {"NoSQL":noSQL, 'duration': duration}
+    return {"NoSQL":noSQL, 'duration': duration, 'succ':succ, 'nums': nums}
 
 def makeCmd(_name, _text):
     rezList = []
     _text = re.sub('--.*?\n', '', _text)
     cmds = re.split("; *\n+", _text)
-    i = 1
+    i = 0
+    passed = 0
     for cmd in cmds:
         cmd = cmd.replace(';', '')
         cmd = re.sub(r'\'.*?\'', lambda x: ''.join(x.group(0).split()), cmd)
@@ -90,13 +91,14 @@ def makeCmd(_name, _text):
                 try:
                     rezEval = eval(str(textList[0].lower()) + 'Q' + '(' + str(tempDict) + ')')
                     rezList.append(rezEval)
+                    passed = passed + 1
                 except:
-                    rezList.append('Invalid Command ' + str(i))
+                    rezList.append('Invalid Command ' + str(i + 1))
             else: 
-                rezList.append('The ' + str(i) +' query can not be converted !')
+                rezList.append('The ' + str(i + 1) +' query can not be converted !')
             i = i + 1
     
-    return '\n'.join(rezList)
+    return ('\n'.join(rezList), i, passed)
 
 @app.route('/resolveFile',methods=['GET'])
 def resolveFile():
@@ -106,11 +108,11 @@ def resolveFile():
     _name = os.path.join(app.config['UPLOAD_FOLDER'], _name)
     f = open(_name, "r")
     sql = f.read()
-    noSQL = makeCmd('select', sql)
+    (noSQL, nums, succ) = makeCmd('select', sql)
 
     duration = time.time() - start_time
     print("--- %s seconds ---" % (duration))
-    return {"NoSQL":noSQL, 'duration': duration}
+    return {"NoSQL":noSQL, 'duration': duration, 'succ':succ, 'nums': nums}
 
 
 
